@@ -2,8 +2,8 @@ import express from "express";
 import db from "../models/index.js"; // Import the database models
 
 const router = express.Router();
-const StudentList = db.StudentList; // Access the StudentList model
 
+const StudentList = db.StudentList; // Access the StudentList model
 // ✅ Get all students
 router.get("/", async (req, res) => {
   try {
@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
     });
   }
 });
-
 // ✅ Get a student by ID
 router.get("/:id", async (req, res) => {
   try {
@@ -30,7 +29,6 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve student" });
   }
 });
-
 // ✅ Create a new student
 router.post("/", async (req, res) => {
   try {
@@ -45,8 +43,6 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Failed to add student" });
   }
 });
-
-
 // ✅ Bulk Insert Students
 router.post("/bulk-insert", async (req, res) => {
     try {
@@ -67,7 +63,6 @@ router.post("/bulk-insert", async (req, res) => {
       res.status(500).json({ message: "Failed to add students" });
     }
   });
-
 // ✅ Update a student by ID
 router.put("/:id", async (req, res) => {
   try {
@@ -85,7 +80,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to update student" });
   }
 });
-
 // ✅ Delete a student by ID
 router.delete("/:id", async (req, res) => {
   try {
@@ -101,9 +95,8 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to delete student" });
   }
 });
-
 // ✅ Create a new student and assign to a mentor
-router.post("/", async (req, res) => {
+router.post("/assignmentor", async (req, res) => {
   try {
     const { studentName, studentClass, parentPhone, mentorId } = req.body;
     if (!studentName || !studentClass || !parentPhone) {
@@ -131,9 +124,8 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Failed to add student" });
   }
 });
-
 // ✅ Get students with their assigned mentor
-router.get("/", async (req, res) => {
+router.get("/getmentors", async (req, res) => {
   try {
     const students = await StudentList.findAll({
       include: [{ model: db.MentorList, as: "mentor" }],

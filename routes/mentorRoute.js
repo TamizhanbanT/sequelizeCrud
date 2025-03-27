@@ -15,9 +15,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve mentors" });
   }
 });
-
-
-
 // ✅ Create a new mentor
 router.post("/", async (req, res) => {
   try {
@@ -32,7 +29,6 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Failed to add mentor" ,"err":error});
   }
 });
-
 // ✅ Update a mentor by ID
 router.put("/:id", async (req, res) => {
   try {
@@ -50,7 +46,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to update mentor" });
   }
 });
-
 // ✅ Delete a mentor by ID
 router.delete("/:id", async (req, res) => {
   try {
@@ -78,7 +73,6 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve mentors" });
   }
 });
-
 // ✅ Get a mentor by ID with students
 router.get("/all/:id", async (req, res) => {
   try {
@@ -94,7 +88,6 @@ router.get("/all/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve mentor" });
   }
 });
-
 // ✅ Get a mentor by ID
 router.get("/:id", async (req, res) => {
   try {
