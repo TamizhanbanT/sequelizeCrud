@@ -11,7 +11,9 @@ router.get("/", async (req, res) => {
     res.status(200).json(students);
   } catch (error) {
     console.error("Error retrieving students:", error);
-    res.status(500).json({ message: "Failed to retrieve students" });
+    res.status(500).json({ message: "Failed to retrieve students" ,
+      "err":error
+    });
   }
 });
 
@@ -99,5 +101,49 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to delete student" });
   }
 });
+
+// ✅ Create a new student and assign to a mentor
+router.post("/", async (req, res) => {
+  try {
+    const { studentName, studentClass, parentPhone, mentorId } = req.body;
+    if (!studentName || !studentClass || !parentPhone) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check if the mentor exists before assigning
+    if (mentorId) {
+      const mentor = await db.MentorList.findByPk(mentorId);
+      if (!mentor) {
+        return res.status(400).json({ message: "Invalid mentor ID" });
+      }
+    }
+
+    const newStudent = await StudentList.create({
+      studentName,
+      studentClass,
+      parentPhone,
+      mentorId, // Assign mentor ID if provided
+    });
+
+    res.status(201).json({ message: "Student added successfully", student: newStudent });
+  } catch (error) {
+    console.error("Error adding student:", error);
+    res.status(500).json({ message: "Failed to add student" });
+  }
+});
+
+// ✅ Get students with their assigned mentor
+router.get("/", async (req, res) => {
+  try {
+    const students = await StudentList.findAll({
+      include: [{ model: db.MentorList, as: "mentor" }],
+    });
+    res.status(200).json(students);
+  } catch (error) {
+    console.error("Error retrieving students:", error);
+    res.status(500).json({ message: "Failed to retrieve students" });
+  }
+});
+
 
 export default router;

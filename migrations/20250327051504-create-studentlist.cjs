@@ -9,6 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      mentorId: {  // Foreign key column
+        type: Sequelize.INTEGER,
+        allowNull: true,  // Student may not be assigned to a mentor initially
+        references: {
+          model: "mentorlists",
+          key: "mentorId",
+        }},
       studentName: {
         type: Sequelize.STRING,
         allowNull: false

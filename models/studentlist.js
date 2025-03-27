@@ -19,6 +19,16 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
+      mentorId: {  // Foreign key column
+        type: DataTypes.INTEGER,
+        allowNull: true,  // Student may not be assigned to a mentor initially
+        references: {
+          model: "mentorlists",
+          key: "mentorId",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL", // If a mentor is deleted, set mentorId to NULL in students
+      },
     },
     {
       timestamps: true,
@@ -26,40 +36,3 @@ export default (sequelize, DataTypes) => {
     }
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-// 'use strict';
-// const {
-//   Model
-// } = require('sequelize');
-// module.exports = (sequelize, DataTypes) => {
-//   class StudentList extends Model {
-//     /**
-//      * Helper method for defining associations.
-//      * This method is not a part of Sequelize lifecycle.
-//      * The `models/index` file will call this method automatically.
-//      */
-//     static associate(models) {
-//       // define association here
-//     }
-//   }
-//   StudentList.init({
-//     studentId: DataTypes.INTEGER,
-//     studentName: DataTypes.STRING,
-//     studentClass: DataTypes.INTEGER,
-//     parentPhone: DataTypes.INTEGER
-//   }, {
-//     sequelize,
-//     modelName: 'StudentList',
-//   });
-//   return StudentList;
-// };
