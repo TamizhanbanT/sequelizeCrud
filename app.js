@@ -6,7 +6,10 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
-import mentorsRouter from './routes/mentorRoute.js'
+//my routes
+
+import mentorsRouter from './routes/mentorRoute.js';
+import studentRouter from './routes/studentroute.js';
 
 
 const app = express();
@@ -24,7 +27,11 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+
+//my custom model and routes
+
 app.use('/mentors',mentorsRouter)
+app.use('/students',studentRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
